@@ -113,7 +113,7 @@ when 'neutron'
 
   floating = node['openstack']['compute']['network']['floating']
   if floating && floating['ipv4_cidr']
-    cmd = ". /root/openrc && #{node['openstack']['compute']['floating_cmd']} neutron --cidr=#{floating['ipv4_cidr']} --pool=#{floating['public_network_name']}"
+    cmd = ". /root/openrc && #{node['openstack']['compute']['floating_cmd']} neutron --cidr=#{floating['ipv4_cidr']} --pool=#{floating['public_network_name']} --ip-range=#{floating['ipv4_range']}"
 
     execute 'neutron floating create' do
       command cmd

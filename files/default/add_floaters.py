@@ -66,7 +66,7 @@ class FloatingAddress(object):
 
         subprocess.check_call(cmd, shell=True)
 
-    def neutron_add_floating(self, cidr):
+    def neutron_add_floating(self, cidr, start=None, end=None):
 
         # convert cidr string to IPNetwork object
         cidr = netaddr.IPNetwork(cidr)
@@ -91,8 +91,14 @@ class FloatingAddress(object):
             return
 
         # calculate the start and end values
-        ip_start = cidr.ip
-        ip_end = netaddr.IPAddress(cidr.last-1)
+        if start:
+            ip_start = start
+        else:
+            ip_start = cidr.ip
+        if end:
+            ip_end = end
+        else:
+            ip_end = netaddr.IPAddress(cidr.last-1)
 
         # create a new subnet
         cmd = "neutron subnet-create --allocation-pool start=%s,end=%s %s %s -- --enable_dhcp=False" % \
@@ -131,6 +137,10 @@ def parse_args():
     parser_neutron.add_argument('--pool',
                                 required=True,
                                 help="Name of the public network")
+    group = parser_neutron.add_mutually_exclusive_group(required=True)
+    group.add_argument('--ip-range',
+                       help="A range of addresses to add "
+                            "(e.g. 192.168.0.10,192.168.0.50)")
     return ap.parse_args()
 
 if __name__ == '__main__':
@@ -145,4 +155,8 @@ if __name__ == '__main__':
             fa.nova_add_range(start, end)
 
     elif args.subparser_name == 'neutron':
-        fa.neutron_add_floating(args.cidr)
+        if args.cidr and args.ip_range:
+            start, end = args.ip_range.split(',')
+            fa.neutron_add_floating(args.cidr, start, end)
+        else:
+            fa.neutron_add_floating(args.cidr)

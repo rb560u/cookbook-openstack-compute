@@ -12,6 +12,8 @@ default['openstack']['compute']['custom_template_banner'] = '
 # Do not edit, changes will be overwritten
 '
 
+default['openstack']['endpoints']['compute-api-internal']['uri'] = node['openstack']['endpoints']['compute-api']['uri']
+
 # The name of the Chef role that knows about the message queue server
 # that Nova uses
 default['openstack']['compute']['rabbit_server_chef_role'] = 'os-ops-messaging'

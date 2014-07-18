@@ -33,6 +33,7 @@ service_user = node['openstack']['compute']['service_user']
 service_role = node['openstack']['compute']['service_role']
 service_tenant_name = node['openstack']['compute']['service_tenant_name']
 nova_api_endpoint = endpoint 'compute-api'
+nova_api_endpoint_internal = endpoint 'compute-api-internal'
 ec2_admin_endpoint = endpoint 'compute-ec2-admin'
 ec2_public_endpoint = endpoint 'compute-ec2-api'
 region = node['openstack']['compute']['region']
@@ -86,8 +87,8 @@ openstack_identity_register 'Register Compute Endpoint' do
   bootstrap_token bootstrap_token
   service_type 'compute'
   endpoint_region region
-  endpoint_adminurl ::URI.decode nova_api_endpoint.to_s
-  endpoint_internalurl ::URI.decode nova_api_endpoint.to_s
+  endpoint_adminurl ::URI.decode nova_api_endpoint_internal.to_s
+  endpoint_internalurl ::URI.decode nova_api_endpoint_internal.to_s
   endpoint_publicurl ::URI.decode nova_api_endpoint.to_s
 
   action :create_endpoint

@@ -96,10 +96,10 @@ memcache_servers = memcached_servers.join ","
 identity_endpoint = endpoint "identity-api"
 xvpvnc_endpoint = endpoint "compute-xvpvnc" || {}
 novnc_endpoint = endpoint "compute-novnc" || {}
-compute_api_endpoint = endpoint "compute-api" || {}
+compute_api_endpoint = endpoint "compute-api-internal" || {}
 ec2_public_endpoint = endpoint "compute-ec2-api" || {}
-network_endpoint = endpoint "network-api" || {}
-image_endpoint = endpoint "image-api"
+network_endpoint = endpoint "network-api-internal" || {}
+image_endpoint = endpoint "image-api-internal"
 
 Chef::Log.debug("openstack-compute::nova-common:keystone|#{keystone}")
 Chef::Log.debug("openstack-compute::nova-common:ksadmin_user|#{ksadmin_user}")

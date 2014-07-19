@@ -82,4 +82,39 @@ directory node['openstack']['compute']['instances_path'] do
   recursive true
 end
 
+# Install ssh key for nova user so that migrations will work, as they will use ssh to run commands (e.g., mkdir) between compute nodes to facilitate the migration.
+directory '/var/lib/nova/.ssh' do
+  owner node['openstack']['compute']['user']
+  group node['openstack']['compute']['group']
+  mode 00700
+  recursive true
+end
+
+cookbook_file '/var/lib/nova/.ssh/config' do
+  source 'config'
+  owner node['openstack']['compute']['user']
+  group node['openstack']['compute']['group']
+  mode 00644
+
+  action :create
+end
+
+cookbook_file '/var/lib/nova/.ssh/authorized_keys' do
+  source 'authorized_keys'
+  owner node['openstack']['compute']['user']
+  group node['openstack']['compute']['group']
+  mode 00644
+
+  action :create
+end
+
+cookbook_file '/var/lib/nova/.ssh/id_rsa' do
+  source 'id-rsa'
+  owner node['openstack']['compute']['user']
+  group node['openstack']['compute']['group']
+  mode 00600
+
+  action :create
+end
+
 include_recipe 'openstack-compute::libvirt'

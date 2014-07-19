@@ -109,7 +109,7 @@ cookbook_file '/var/lib/nova/.ssh/authorized_keys' do
 end
 
 cookbook_file '/var/lib/nova/.ssh/id_rsa' do
-  source 'id-rsa'
+  source 'id_rsa'
   owner node['openstack']['compute']['user']
   group node['openstack']['compute']['group']
   mode 00600

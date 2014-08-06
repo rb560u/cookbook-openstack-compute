@@ -167,6 +167,26 @@ rbd_secret_uuid=<%= @rbd_secret_uuid %>
 notification_driver=<%= d %>
 <% end %>
 <% end %>
+# AMQP topic used for OpenStack notifications (if not specified, nova sets it to "notifications")
+<% if node['openstack']['compute']['config']['notification_topics'] %>
+notification_topics=<%= node['openstack']['compute']['config']['notification_topics'] %>
+<% end %>
+# If set, send api.fault notifications on caught exceptions in the API service
+<% if node['openstack']['compute']['config']['notify_api_faults'] %>
+notify_api_faults=<%= node['openstack']['compute']['config']['notify_api_faults'] %>
+<% end %>
+<% if node['openstack']['compute']['config']['default_notification_level'] %>
+default_notification_level=<%= node['openstack']['compute']['config']['default_notification_level'] %>
+<% end %>
+# Default publisher_id for outgoing notifications
+<% if node['openstack']['compute']['config']['default_publisher_id'] %>
+default_publisher_id=<%= node['openstack']['compute']['config']['default_publisher_id'] %>
+<% end %>
+# Enable monkey patch
+<% if node['openstack']['compute']['config']['monkey_patch_modules'] %>
+monkey_patch=True
+monkey_patch_modules=<%= node['openstack']['compute']['config']['monkey_patch_modules'] %>
+<% end %>
 
 # Generate periodic compute.instance.exists notifications
 instance_usage_audit=<%= node['openstack']['compute']['config']['instance_usage_audit'] %>

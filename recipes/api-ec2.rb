@@ -56,9 +56,10 @@ end
 
 identity_endpoint = endpoint 'identity-api'
 identity_admin_endpoint = endpoint 'identity-admin'
+identity_internal_endpoint = endpoint 'identity-api-internal'
 service_pass = get_password 'service', 'openstack-compute'
 
-auth_uri = auth_uri_transform identity_endpoint.to_s, node['openstack']['compute']['api']['auth']['version']
+auth_uri = auth_uri_transform identity_internal_endpoint.to_s, node['openstack']['compute']['api']['auth']['version']
 
 template '/etc/nova/api-paste.ini' do
   source 'api-paste.ini.erb'
@@ -67,7 +68,7 @@ template '/etc/nova/api-paste.ini' do
   mode   00644
   variables(
     auth_uri: auth_uri,
-    identity_admin_endpoint: identity_admin_endpoint,
+    identity_internal_endpoint: identity_internal_endpoint,
     service_pass: service_pass
   )
   notifies :restart, 'service[nova-api-ec2]'

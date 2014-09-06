@@ -13,6 +13,7 @@ default['openstack']['compute']['custom_template_banner'] = '
 '
 
 default['openstack']['endpoints']['compute-api-internal']['uri'] = node['openstack']['endpoints']['compute-api']['uri']
+default['openstack']['endpoints']['compute-api-admin']['uri'] = node['openstack']['endpoints']['compute-api-internal']['uri']
 
 # The name of the Chef role that knows about the message queue server
 # that Nova uses

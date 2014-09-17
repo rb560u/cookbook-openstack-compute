@@ -16,6 +16,9 @@ state_path=<%= node["openstack"]["compute"]["state_path"] %>
 instances_path=<%= node["openstack"]["compute"]["instances_path"] %>
 lock_path=<%= node["openstack"]["compute"]["lock_path"] %>
 
+# Region name of this node (string value)
+os_region_name=<%= node['openstack']['region'] %>
+
 # Options defined in nova.openstack.common.rpc
 rpc_thread_pool_size=<%= node["openstack"]["compute"]["rpc_thread_pool_size"] %>
 rpc_conn_pool_size=<%= node["openstack"]["compute"]["rpc_conn_pool_size"] %>
@@ -75,6 +78,7 @@ storage_availability_zone=<%= node["openstack"]["compute"]["config"]["storage_av
 
 when "neutron" -%>
 
+neutron_region_name=<%= node['openstack']['region'] %>
 neutron_url=http://<%= @network_endpoint.host %>:<%= @network_endpoint.port %>
 network_api_class=<%= node["openstack"]["compute"]["network"]["neutron"]["network_api_class"]  %>
 neutron_auth_strategy=<%= node["openstack"]["compute"]["network"]["neutron"]["auth_strategy"] %>

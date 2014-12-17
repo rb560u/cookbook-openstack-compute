@@ -1,5 +1,5 @@
 Description
-==========================
+===================================================================================================
 
 This cookbook installs the OpenStack Compute service **Nova** as part of the OpenStack reference deployment Chef for OpenStack. The http://github.com/mattray/chef-openstack-repo contains documentation for using this cookbook in the context of a full OpenStack deployment. Nova is currently installed from packages.
 
